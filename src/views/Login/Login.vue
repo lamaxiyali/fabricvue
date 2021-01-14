@@ -65,7 +65,7 @@
               _this.$store.commit('login', _this.loginForm)
               var path = _this.$route.query.redirect
               _this.$message({
-                message: '登录成功',
+                message: '登录成功测试',
                 type: 'success'
               })
               this.$router.replace({
