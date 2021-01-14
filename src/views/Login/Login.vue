@@ -64,6 +64,10 @@
               // var data = this.loginForm
               _this.$store.commit('login', _this.loginForm)
               var path = _this.$route.query.redirect
+              _this.$message({
+                message: '登录成功',
+                type: 'success'
+              })
               this.$router.replace({
                 path: path === '/' || path === undefined ? '/index' : path
               })
