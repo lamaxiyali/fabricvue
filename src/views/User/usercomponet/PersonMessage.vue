@@ -81,8 +81,7 @@
           console.log(e)
           alert('你有新消息：' + e.data)
           this.personmessage = e.data
-          var array = this.personmessage.toString().split(' ')
-          array.push(new Date().toLocaleString())
+          var array = this.personmessage.toString().split('---')
           this.$store.commit('messageAdd', array)
           this.messagearray = this.$store.state.personmessage
         },

@@ -33,10 +33,10 @@
             this.$router.push('/user/personmessage')
           }
           if (key === '4') {
-            this.$router.push('/user/personmessage')
+            this.$router.push('/user/systemmessage')
           }
           if (key === '5') {
-            this.$router.push('/user/personmessage')
+            this.$router.push('/user/personallmessage')
           }
         }
       }

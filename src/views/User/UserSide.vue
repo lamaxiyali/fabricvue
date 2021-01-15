@@ -38,8 +38,6 @@
     },
     methods: {
       handleSelect (key, keyPath) {
-        console.log(key)
-        alert(key)
         this.cid = key
         this.$emit('indexSelect', this.cid)
       }
