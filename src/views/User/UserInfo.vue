@@ -29,6 +29,15 @@
           if (key === '2') {
             this.$router.push('/user/personcoin')
           }
+          if (key === '3') {
+            this.$router.push('/user/personmessage')
+          }
+          if (key === '4') {
+            this.$router.push('/user/personmessage')
+          }
+          if (key === '5') {
+            this.$router.push('/user/personmessage')
+          }
         }
       }
     }

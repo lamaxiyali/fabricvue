@@ -19,7 +19,7 @@
       <el-submenu index="2" style="float: right">
         <template slot="title">我的信息</template>
         <el-menu-item index="/user">个人中心</el-menu-item>
-        <el-menu-item index="2-2">修改密码</el-menu-item>
+        <el-menu-item index="/user">修改密码</el-menu-item>
       </el-submenu>
     <p class="user">当前用户:{{this.$store.state.user.username}}</p>
 <!--    <span style="position: absolute;padding-top: 20px;right: 43%;font-size: 20px;font-weight: bold">Sensing data</span>-->

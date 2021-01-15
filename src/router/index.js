@@ -20,6 +20,7 @@ import Channel from '../views/blockchain/blockchain/Channel'
 import Chaincode from '../views/blockchain/blockchain/Chaincode'
 import UserInfo from '../views/User/UserInfo'
 import PersonInfo from '../views/User/usercomponet/PersonInfo'
+import PersonMessage from '../views/User/usercomponet/PersonMessage'
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -80,7 +81,8 @@ export default new Router({
           component: UserInfo,
           redirect: '/user/personinfo',
           children: [
-            {path: 'personinfo', name: 'PersonInfo', component: PersonInfo}
+            {path: 'personinfo', name: 'PersonInfo', component: PersonInfo},
+            {path: 'personmessage', name: 'PersonMessage', component: PersonMessage}
           ]
         },
         {

@@ -6,7 +6,8 @@ export default new Vuex.Store({
   state: {
     user: {
       username: window.localStorage.getItem('user' || '[]') == null ? '' : JSON.parse(window.localStorage.getItem('user' || '[]')).username
-    }
+    },
+    personmessage: []
   },
   mutations: {
     login (state, user) {
@@ -16,6 +17,12 @@ export default new Vuex.Store({
     logout (state) {
       state.user = []
       window.localStorage.removeItem('user')
+    },
+    messageAdd (state, item) {
+      state.personmessage.push(item)
+    },
+    messageRemove (state) {
+      state.personmessage = []
     }
   }
 })
