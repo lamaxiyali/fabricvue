@@ -1,6 +1,6 @@
 # wj-vue
 
-> A Vue.js project
+> A Vue.js project test
 
 ## Build Setup
 
