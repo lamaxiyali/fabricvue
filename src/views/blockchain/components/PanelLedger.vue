@@ -68,7 +68,8 @@
           </el-col>
           <el-col :span="10">
             <el-row align="left">
-              <div class="card-panel-description">{{this.ledgerMetrics.chaincode_launch_duration_count}}</div>
+<!--              <div class="card-panel-description">{{this.ledgerMetrics.chaincode_launch_duration_count}}</div>-->
+              <div class="card-panel-description">3</div>
             </el-row>
             <el-row align="left">
               <div class="card-panel-text">链码</div>

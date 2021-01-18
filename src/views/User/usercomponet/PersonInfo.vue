@@ -22,6 +22,17 @@
         <span>{{value}}</span>
       </div>
     </el-card>
+    <el-card class="userinfo">
+      <h3 style="text-align: left">信誉奖励信息
+        <span>
+        <el-button type="text" @click="editContactInfo"><i class="el-icon-edit">查看</i> </el-button>
+      </span>
+      </h3>
+      <div v-for="(value,o) in this.credit" :key="o" class="word">
+        <span style="width:80px; text-align:left;  display:inline-block;">{{o}}:</span>
+        <span>{{value}}</span>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -42,6 +53,10 @@
           contact: {
             'email': '',
             'phone': ''
+          },
+          credit: {
+            'credit': '',
+            'reward': ''
           }
         }
       },
