@@ -25,10 +25,10 @@
     <el-card class="userinfo">
       <h3 style="text-align: left">信誉奖励信息
         <span>
-        <el-button type="text" @click="editContactInfo"><i class="el-icon-edit">查看</i> </el-button>
+        <el-button type="text" @click="seeUserCredit"><i class="el-icon-edit">查看</i> </el-button>
       </span>
       </h3>
-      <div v-for="(value,o) in this.credit" :key="o" class="word">
+      <div v-for="(value,o) in this.usercredit" :key="o" class="word">
         <span style="width:80px; text-align:left;  display:inline-block;">{{o}}:</span>
         <span>{{value}}</span>
       </div>
@@ -54,7 +54,7 @@
             'email': '',
             'phone': ''
           },
-          credit: {
+          usercredit: {
             'credit': '',
             'reward': ''
           }
@@ -62,6 +62,7 @@
       },
       created() {
         this.loadPersonInfo()
+        this.loadCreditAndReward()
       },
       methods: {
         editPersonInfo: function () {
@@ -69,6 +70,13 @@
         },
         editContactInfo: function () {
           alert('contactinfo')
+        },
+        seeUserCredit: function () {
+          this.loadCreditAndReward()
+          this.$message({
+            message: '已获取最新数据',
+            type: 'success'
+          })
         },
         loadPersonInfo: function () {
           var _this = this
@@ -92,6 +100,27 @@
               _this.contact['phone'] = res.data.phone
             } else {
               alert('获取个人信息出错')
+            }
+          })
+          .catch(failed => (
+            alert('网络错误')
+          ))
+        },
+        loadCreditAndReward: function () {
+          var _this = this
+          this.$axios.post('/user/credit', {
+            key: _this.$store.state.user.username
+          }).then(res => {
+            if (res.status === 200) {
+              if (res.data !== '') {
+                _this.usercredit['credit'] = res.data.record.credit
+                _this.usercredit['reward'] = res.data.record.reward
+              } else {
+                _this.$message({
+                  message: '链上不存在您的信息',
+                  type: 'warning'
+                })
+              }
             }
           })
           .catch(failed => (
