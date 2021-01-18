@@ -23,7 +23,7 @@
       </template>
         <el-menu-item index="3">最新消息</el-menu-item>
         <el-menu-item index="4">系统消息</el-menu-item>
-        <el-menu-item index="5">历史消息</el-menu-item>
+        <el-menu-item index="5">用户消息</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
