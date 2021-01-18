@@ -16,6 +16,10 @@
       <i class="fontFamily lamaicon-"></i>
       <span slot="title">链码信息</span>
     </el-menu-item>
+    <el-menu-item index="3">
+      <i class="fontFamily lamaico_home_obligation"></i>
+      <span slot="title">链上用户</span>
+    </el-menu-item>
   </el-menu>
 </template>
 

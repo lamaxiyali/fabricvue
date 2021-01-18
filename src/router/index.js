@@ -23,6 +23,7 @@ import PersonInfo from '../views/User/usercomponet/PersonInfo'
 import PersonMessage from '../views/User/usercomponet/PersonMessage'
 import SystemMessage from '../views/User/usercomponet/SystemMessage'
 import PersonAllMessage from '../views/User/usercomponet/PersonAllMessage'
+import UserOnBlockchain from '../views/blockchain/blockchain/UserOnBlockchain'
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -109,7 +110,8 @@ export default new Router({
           children: [
             {path: 'ledger', name: 'Ledger', component: Ledger, meta: {name: '账本信息'}},
             {path: 'channel', name: 'Channel', component: Channel, meta: {name: '通道信息'}},
-            {path: 'chaincode', name: 'Chaincode', component: Chaincode, meta: {name: '链码信息'}}
+            {path: 'chaincode', name: 'Chaincode', component: Chaincode, meta: {name: '链码信息'}},
+            {path: 'useronchain', name: 'UserOnchain', component: UserOnBlockchain, meta: {name: '链上用户'}}
           ]
         },
         {
