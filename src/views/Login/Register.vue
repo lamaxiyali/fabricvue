@@ -190,17 +190,17 @@
         return {
           activeName: 'first',
           ruleForm: {
-            username: '',
-            password: '',
-            password1: '',
-            email: '',
+            username: 'test',
+            password: '111111',
+            password1: '111111',
+            email: '@qq.com',
             phone: '',
             truename: '',
             idcard: '',
             professional: '',
             education: '',
             major: '',
-            age: '0'
+            age: '20'
           },
           rules: {
             username: [

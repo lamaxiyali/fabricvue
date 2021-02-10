@@ -32,7 +32,7 @@
         </el-form-item>
         <el-form-item label="感知日期设置">
           <el-col :span="20">
-            <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date" style="width: 100%;"></el-date-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%;"></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="时间限制" style="width: 100%">
@@ -168,7 +168,7 @@
                 if (response.data.code === 200) {
                   this.$notify({
                     title: '成功',
-                    message: '发布文章成功',
+                    message: '发布任务成功',
                     type: 'success'
                   })
                 }

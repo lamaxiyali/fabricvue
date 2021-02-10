@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AppIndex from '../components/home/AppIndex'
 import Login from '../views/Login/Login'
 import Header from '../components/test/Header'
 import Register from '../views/Login/Register'
@@ -24,6 +23,7 @@ import PersonMessage from '../views/User/usercomponet/PersonMessage'
 import SystemMessage from '../views/User/usercomponet/SystemMessage'
 import PersonAllMessage from '../views/User/usercomponet/PersonAllMessage'
 import UserOnBlockchain from '../views/blockchain/blockchain/UserOnBlockchain'
+import HomeIndex from '../views/Index/HomeIndex'
 Vue.use(Router)
 export default new Router({
   mode: 'history',
@@ -72,8 +72,8 @@ export default new Router({
       children: [
         {
           path: '/index',
-          name: 'AppIndex',
-          component: AppIndex,
+          name: 'HomeIndex',
+          component: HomeIndex,
           meta: {
             requireAuth: true
           }

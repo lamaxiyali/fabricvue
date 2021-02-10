@@ -27,34 +27,31 @@
     <el-table-column label="任务描述"  width="135" align="center">
       <template slot-scope="scope">
         <el-tooltip content="点击查看任务详细描述" placement="top">
-        <el-button type="text" @click="changebutton(scope)">任务描述
-        </el-button>
+        <el-button type="text" @click="dialogVisible = true">任务描述</el-button>
         </el-tooltip>
-<!--        <el-dialog-->
-<!--          title="任务描述"-->
-<!--          width="30%"-->
-<!--          :visible="dialogVisible"-->
-<!--          :before-close="handleClose">-->
-<!--          &lt;!&ndash;            {{tableData[scope.$index]}}&ndash;&gt;-->
-<!--          <el-dialog-->
-<!--            width="50%"-->
-<!--            title="任务详细说明"-->
-<!--            :visible="innerVisible"-->
-<!--            :before-close="handleClose1"-->
-<!--            append-to-body>-->
-<!--            {{scope.row.task_desc}}-->
-<!--          </el-dialog>-->
-<!--          <div align="left">-->
-<!--            {{tableData[scope.$index]}}-->
-<!--            <div><p style="font-size: medium">任务类型：<strong>{{scope.row.task_type}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">感知日期：<strong style="color: red">{{scope.row.task_date}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">感知区域：<strong style="color: red">{{scope.row.task_area}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">开始时间：<strong style="color: #ff0000">{{scope.row.task_startTime}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">结束时间：<strong style="color: red">{{scope.row.task_endTime}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">人数限制：<strongs style="color: red">{{scope.row}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">任务描述：<el-button type="info" size="small" @click="innerVisible = true">点击查看具体说明</el-button></p></div>-->
-<!--          </div>-->
-<!--        </el-dialog>-->
+        <el-dialog
+          title="任务描述"
+          width="30%"
+          :visible.sync="dialogVisible"
+          :before-close="handleClose">
+          <el-dialog
+            width="50%"
+            title="任务详细说明"
+            :visible.sync="innerVisible"
+            :before-close="handleClose1"
+            append-to-body>
+            {{scope.row.task_desc}}
+          </el-dialog>
+          <div align="left">
+            <div><p style="font-size: medium">任务类型：<strong>{{scope.row.task_type}}</strong></p></div>
+            <div><p style="font-size: medium">感知日期：<strong style="color: red">{{scope.row.task_date}}</strong></p></div>
+            <div><p style="font-size: medium">感知区域：<strong style="color: red">{{scope.row.task_area}}</strong></p></div>
+            <div><p style="font-size: medium">开始时间：<strong style="color: red">{{scope.row.task_startTime}}</strong></p></div>
+            <div><p style="font-size: medium">结束时间：<strong style="color: red">{{scope.row.task_endTime}}</strong></p></div>
+            <div><p style="font-size: medium">人数限制：<strong style="color: red">{{scope.row.people_limit}}</strong></p></div>
+            <div><p style="font-size: medium">任务描述：<el-button type="info" size="small" @click="innerVisible = true">点击查看具体说明</el-button></p></div>
+          </div>
+        </el-dialog>
       </template>
     </el-table-column>
     <el-table-column label="任务状态"  width="135" align="center">
@@ -152,7 +149,6 @@ export default {
     },
     partshow (partdata1) {
       this.partData = partdata1
-      console.log(partdata1)
       this.sible = true
     },
     count () {
@@ -190,28 +186,6 @@ export default {
     },
     handleClose1: function () {
       this.innerVisible = false
-    },
-    changebutton(scope) {
-      this.dialogVisible = true
-      var strs = '<pre>'
-      strs += '任务类型：' + scope.row.task_type + '\n'
-      strs += '感知日期：' + scope.row.task_date + '\n'
-      strs += '感知区域：' + scope.row.task_area + '\n'
-      strs += '开始时间：' + scope.row.task_startTime + '\n'
-      strs += '结束时间：' + scope.row.task_endTime + '\n'
-      strs += '人数限制：' + scope.row.people_limit + '\n'
-      strs += '任务描述：' + scope.row.task_desc + '\n'
-      strs += '</pre>'
-      this.$alert(strs, '任务情况说明', {
-        confirmButtonText: '确定',
-        dangerouslyUseHTMLString: true,
-        callback: action => {
-          // this.$message({
-          //   type: 'info',
-          //   // message: `${action}`
-          // })
-        }
-      })
     }
   }
 }

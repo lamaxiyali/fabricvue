@@ -4,14 +4,15 @@
       <line-chart :chart-data="shoppings" style="margin-top: 10px"></line-chart>
       <el-row style="margin-top:30px;">
         <el-col :span="24" style="padding-right:8px;">
-          <el-card>
-            <div slot="header" class="clearfix">
-              <span>任务情况</span>
-            </div>
-            <div>
-              <transaction-table></transaction-table>
-            </div>
-          </el-card>
+<!--          <el-card>-->
+            <home-see-task></home-see-task>
+<!--&lt;!&ndash;            <div slot="header" class="clearfix">&ndash;&gt;-->
+<!--&lt;!&ndash;              <span>任务情况</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            <div>-->
+<!--              <home-see-task></home-see-task>-->
+<!--            </div>-->
+<!--          </el-card>-->
         </el-col>
       </el-row>
     </el-main>
@@ -19,10 +20,9 @@
 </template>
 
 <script>
-  import BreadBar from './BreadBar'
-  import PanelGroup from './componets/PanelGroup'
-  import LineChart from './componets/LineChart'
-  import TransactionTable from './componets/TransactionTable'
+import PanelGroup from './components/PanelGroup'
+import LineChart from './components/LineChart'
+import HomeSeeTask from './HomeSeeTask'
   const lineChartData = {
     newVisitis: {
       expectedData: [13, 14, 14, 14, 15, 15, 16],
@@ -43,7 +43,7 @@
   }
     export default {
       name: 'Task',
-      components: {BreadBar, PanelGroup, LineChart, TransactionTable},
+      components: {PanelGroup, LineChart, HomeSeeTask},
       data () {
         return {
           shoppings: {
