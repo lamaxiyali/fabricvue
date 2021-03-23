@@ -20,6 +20,13 @@
           <el-table :data="partData">
             <el-table-column property="task_userid" label="用户名称"></el-table-column>
             <el-table-column property="task_id" label="任务编号"></el-table-column>
+            <el-table-column prop="task_userid" label="数据提交">
+              <template slot-scope="scope">
+              <el-button :type="checkcolor(scope.row.task_userid)" plain size="small" :disabled="checkusername(scope.row.task_userid)" @click="summitData(scope.row)">
+                  上传感知数据
+            </el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </el-dialog>
       </template>
@@ -30,31 +37,6 @@
         <el-button type="text" @click="changebutton(scope)">任务描述
         </el-button>
         </el-tooltip>
-<!--        <el-dialog-->
-<!--          title="任务描述"-->
-<!--          width="30%"-->
-<!--          :visible="dialogVisible"-->
-<!--          :before-close="handleClose">-->
-<!--          &lt;!&ndash;            {{tableData[scope.$index]}}&ndash;&gt;-->
-<!--          <el-dialog-->
-<!--            width="50%"-->
-<!--            title="任务详细说明"-->
-<!--            :visible="innerVisible"-->
-<!--            :before-close="handleClose1"-->
-<!--            append-to-body>-->
-<!--            {{scope.row.task_desc}}-->
-<!--          </el-dialog>-->
-<!--          <div align="left">-->
-<!--            {{tableData[scope.$index]}}-->
-<!--            <div><p style="font-size: medium">任务类型：<strong>{{scope.row.task_type}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">感知日期：<strong style="color: red">{{scope.row.task_date}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">感知区域：<strong style="color: red">{{scope.row.task_area}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">开始时间：<strong style="color: #ff0000">{{scope.row.task_startTime}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">结束时间：<strong style="color: red">{{scope.row.task_endTime}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">人数限制：<strongs style="color: red">{{scope.row}}</strong></p></div>-->
-<!--            <div><p style="font-size: medium">任务描述：<el-button type="info" size="small" @click="innerVisible = true">点击查看具体说明</el-button></p></div>-->
-<!--          </div>-->
-<!--        </el-dialog>-->
       </template>
     </el-table-column>
     <el-table-column label="任务状态"  width="135" align="center">
@@ -70,7 +52,7 @@
     <el-table-column label="参加任务"  width="135" align="center">
       <template slot-scope="scope">
         <el-tooltip content="点击参与任务" placement="right">
-        <el-button :type="scope.row.task_status === '进行中' ? 'success' : 'danger'" size="small" :disabled="scope.row.task_status !== '进行中'" @click="partin(scope.row.tid)">参与任务</el-button>
+        <el-button :type="scope.row.task_status === '进行中' ? 'success' : 'danger'" size="small" :disabled="scope.row.task_status !== '进行中'" @click="partin(scope.row)">参与任务</el-button>
         </el-tooltip>
       </template>
     </el-table-column>
@@ -86,6 +68,67 @@
       :total="totalCount">
     </el-pagination>
   </div>
+    <el-dialog
+      title="上传属性集"
+      :visible.sync="dialogFormVisible"
+      >
+      <el-form v-model="form" style="text-align: left" ref="dataForm">
+        <el-form-item label="任务编号"  prop="title">
+          <el-input v-model="form.task_id" autocomplete="off" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="用户期望价格（ep）"  prop="title">
+          <el-input v-model.number="form.ep" autocomplete="off" placeholder="最大价格为"></el-input>
+        </el-form-item>
+        <el-form-item label="采样频率（ad）"  prop="author">
+          <el-input v-model.number="form.ad" autocomplete="off" placeholder="默认为1-10次"></el-input>
+        </el-form-item>
+        <el-form-item label="采样时间（at）"  prop="date">
+          <el-input v-model.number="form.at" autocomplete="off" placeholder="默认10-100s"></el-input>
+        </el-form-item>
+        <el-form-item label="感知位置（pl）" prop="press">
+          <el-input v-model.number="form.pl" autocomplete="off" placeholder="默认介于1-1000m"></el-input>
+        </el-form-item>
+        <el-form-item label="定位精度（pa）"  prop="cover">
+          <el-input v-model.number="form.pa" autocomplete="off" placeholder="默认介于5-50m"></el-input>
+        </el-form-item>
+        <el-form-item label="未中标次数（bn）"  prop="abs">
+          <el-input v-model.number="form.bn" autocomplete="off" placeholder="默认为0" disabled></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancle">取 消</el-button>
+        <el-button type="primary" @click="onSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog
+      title="上传感知数据"
+      :visible.sync="dialogdataFormVisible"
+    >
+      <el-form v-model="form" style="text-align: left">
+        <el-form-item label="任务编号"  prop="title">
+          <el-input v-model="sensedata.task_id" autocomplete="off" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="感知日期">
+          <el-input v-model="sensedata.date" autocomplete="off" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="感知时间" style="width: 100%">
+          <el-input v-model="sensedata.time" placeholder="请输入获取感知数据花费时间（设备消耗时间）" autocomplete="off" ></el-input>
+        </el-form-item>
+        <el-form-item label="位置经度" >
+          <el-input v-model="sensedata.latitude" placeholder="获取数据大致经度" autocomplete="off" ></el-input>
+        </el-form-item>
+        <el-form-item label="位置维度" >
+          <el-input v-model="sensedata.longitude" placeholder="获取数据大致维度" autocomplete="off" ></el-input>
+        </el-form-item>
+        <el-form-item label="温度数据" >
+          <el-input v-model="sensedata.temperature" placeholder="感知数据平均值" autocomplete="off" ></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancle">取 消</el-button>
+        <el-button type="primary" @click="onSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -97,6 +140,8 @@ export default {
   components: {Task, TaskCard},
   data() {
     return {
+      username: this.$store.state.user.username,
+      attrisupload: false,
       startData: [],
       tableData: [],
       partData: [],
@@ -109,10 +154,27 @@ export default {
       currentPage: 1,
       start: 1,
       totalCount: 100,
-      dialogVisible: false,
+      dialogFormVisible: false,
+      dialogdataFormVisible: false,
       innerVisible: false,
       sible: false,
-      partable: true
+      partable: true,
+      form: {
+        ep: '',
+        ad: '',
+        at: '',
+        pl: '',
+        pa: '',
+        bn: '',
+        task_id: ''
+      },
+      sensedata: {
+        task_id: '',
+        date: '',
+        latitude: '',
+        longitude: '',
+        temperature: ''
+      }
     }
   },
   filters: {
@@ -130,25 +192,96 @@ export default {
     this.loadData(this.currentPage, this.pagesize)
   },
   methods: {
-    partin (id) {
-      alert(id)
-      var taskid = id
-      this.$axios.post('/partin', {
-        info: taskid
+    partin (row) {
+      this.form.task_id = row.tid
+      this.form.bn = 0
+      var pri = row.task_price / row.people_limit
+      this.form.ep = pri
+      this.dialogFormVisible = true
+      // this.$axios.post('/partin', {
+      //   info: taskid
+      // })
+      // .then(res => {
+      //   if (res.data.code === 200) {
+      //     that.dialogFormVisible = true
+      //   }
+      //   if (res.data.code === 400) {
+      //     this.$message.error('该账号已经参与该任务')
+      //   }
+      //   if (res.data.code === 401) {
+      //     this.$message.error('参与人数到达上线')
+      //   }
+      // }).catch(failed => {
+      //   this.$message.error('网络错误')
+      // })
+    },
+    cancle () {
+      this.dialogFormVisible = false
+    },
+    checkcolor (username) {
+      if (username === this.username) {
+        return 'success'
+      }
+      return 'warning'
+    },
+    checkusername (username) {
+      if (username === this.username) {
+        return false
+      }
+      return true
+    },
+    addDate () {
+      let nowDate = new Date()
+      let date = {
+        year: nowDate.getFullYear(),
+        month: nowDate.getMonth() + 1,
+        date: nowDate.getDate()
+      }
+      var systemTime = date.year + '-' + date.month + '-' + date.date
+      return systemTime
+    },
+    summitData (row) {
+      if (row.task_userid !== this.$store.state.user.username) {
+        this.$message.error('当前登录用户与所选参与用户不匹配')
+      } else {
+        this.sensedata.task_id = row.task_id
+        this.sensedata.date = this.addDate()
+        this.dialogdataFormVisible = true
+      }
+    },
+    onSubmit () {
+      var that = this
+      this.$axios.post('/addattr', {
+        ep: this.form.ep,
+        ad: this.form.ad,
+        at: this.form.at,
+        pl: this.form.pl,
+        pa: this.form.pa,
+        bn: this.form.bn,
+        task_id: this.form.task_id
       })
-      .then(res => {
-        if (res.data.code === 200) {
-          this.$message({
-            type: 'success',
-            message: '参与成功'
-          })
-        }
-        if (res.data.code === 400) {
-          this.$message.error('该账号已经参与该任务')
-        }
-      }).catch(failed => {
+        .then(res => {
+          if (res.data.code === 200) {
+            this.$message({
+              type: 'success',
+              message: '参与成功'
+            })
+            that.dialogFormVisible = false
+          }
+          if (res.data.code === 400) {
+            this.$message.error('该账号已经参与该任务')
+          }
+          if (res.data.code === 402) {
+            this.$message.error('链上属性插入逻辑错误')
+          }
+          if (res.data.code === 401) {
+            this.$message.error('参与人数到达上线')
+          }
+        }).catch(failed => {
         this.$message.error('网络错误')
       })
+
+      // alert('onSumbit')
     },
     partshow (partdata1) {
       this.partData = partdata1

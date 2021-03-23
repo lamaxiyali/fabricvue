@@ -66,7 +66,7 @@
     </el-table-column>
     <el-table-column label="参加任务"  width="135" align="center">
       <template slot-scope="scope">
-        <el-tooltip content="点击参与任务" placement="right">
+        <el-tooltip content="点击参与任务11" placement="right">
         <el-button :type="scope.row.task_status === '进行中' ? 'success' : 'danger'" size="small" :disabled="scope.row.task_status !== '进行中'" @click="partin(scope.row.tid)">参与任务</el-button>
         </el-tooltip>
       </template>
